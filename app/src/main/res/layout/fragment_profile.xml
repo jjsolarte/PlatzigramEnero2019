@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.fragment.ProfileFragment"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/fragment_profile_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:background="@color/primary"
+        android:fitsSystemWindows="true">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/fragment_profile_collapsing"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:statusBarScrim="@color/primary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="200dp"
+                android:paddingBottom="20dp"
+                android:layout_gravity="center|top"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp">
+                <TextView
+                    android:id="@+id/fragment_profile_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:textColor="@android:color/white"
+                    android:text="Jeison Solarte"
+                    android:layout_marginLeft="50dp"
+                    android:gravity="center"
+                    android:textSize="@dimen/login_padding_lateral"/>
+            </LinearLayout>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/fragment_profile_recycler"
+        android:scrollbars="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v7.widget.RecyclerView>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="@dimen/fragment_profile_imgdimen"
+        android:layout_height="@dimen/fragment_profile_imgdimen"
+        android:src="@drawable/image"
+        android:layout_gravity="center|top"
+        android:layout_marginTop="30dp"
+        android:paddingRight="15dp"
+        android:elevation="10dp"
+        app:layout_behavior="com.zoonref.SimpleViewBehavior"
+        app:dependTargetY="-156dp"
+        app:targetAlpha="1"
+        app:targetRotateX="0"
+        app:dependsOn="@+id/fragment_profile_appbar"
+        app:dependType="y"
+        app:dependTargetX="-26dp"
+        app:targetX="16dp"
+        app:targetY="5dp"
+        app:targetWidth="40dp"
+        app:targetHeight="40dp"
+        />
+    <TextView
+        android:id="@+id/fragment_profile_username_toolbar"
+        android:text="Jeison SR"
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:layout_marginLeft="72dp"
+        android:layout_marginTop="-100dp"
+        android:gravity="center_vertical"
+        android:textColor="@android:color/white"
+        android:alpha="0"
+        app:layout_behavior="com.zoonref.SimpleViewBehavior"
+        />
+
+</android.support.design.widget.CoordinatorLayout>

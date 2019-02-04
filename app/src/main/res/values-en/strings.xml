@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="login_hint_passw">Password</string>
+    <string name="login_login">Ingresar</string>
+    <string name="create_cuenta_nueva">Usuario Nuevo</string>
+    <string name="create_nombre">Nombre</string>
+    <string name="create_usuario">Usuario</string>
+    <string name="create_contraseña">Contraseña</string>
+    <string name="create_confi_contraseña">Confirmar Contraseña</string>
+    <string name="create_btn_crear">Crear</string>
+    <string name="create_toolbar_name">Crear Cuenta</string>
+    <string name="menu_search">Buscar</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_profile">Perfil</string>
+</resources>
