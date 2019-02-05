@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.fragment.HomeFragment">
+    tools:context=".post.views.HomeFragment">
 
     <include layout="@layout/actionbar_toolbar"></include>
 

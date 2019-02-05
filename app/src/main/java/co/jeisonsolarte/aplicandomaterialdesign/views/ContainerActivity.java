@@ -6,10 +6,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import co.jeisonsolarte.aplicandomaterialdesign.R;
-import co.jeisonsolarte.aplicandomaterialdesign.views.fragment.HomeFragment;
+import co.jeisonsolarte.aplicandomaterialdesign.post.views.HomeFragment;
 import co.jeisonsolarte.aplicandomaterialdesign.views.fragment.ProfileFragment;
 import co.jeisonsolarte.aplicandomaterialdesign.views.fragment.SearchFragment;
 

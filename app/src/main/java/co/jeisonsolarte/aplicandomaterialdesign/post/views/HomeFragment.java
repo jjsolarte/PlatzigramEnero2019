@@ -1,17 +1,28 @@
-package co.jeisonsolarte.aplicandomaterialdesign.views.fragment;
+package co.jeisonsolarte.aplicandomaterialdesign.post.views;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import co.jeisonsolarte.aplicandomaterialdesign.R;
 import co.jeisonsolarte.aplicandomaterialdesign.adapter.PictureAdapterRecycler;
@@ -22,6 +33,10 @@ import co.jeisonsolarte.aplicandomaterialdesign.model.CardviewPicturePOJO;
  */
 public class HomeFragment extends Fragment {
 
+
+    private static final int REQUEST_CAM = 1;
+    private FloatingActionButton floatingBtn;
+    private String photoPathTemp;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -34,6 +49,8 @@ public class HomeFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_home, container, false);
         showToolbar("Home", false, view);
 
+        floatingBtn=view.findViewById(R.id.fragment_home_floating);
+
         RecyclerView recyclerView=view.findViewById(R.id.fragment_home_recycler);
         LinearLayoutManager layoutManager=new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -41,7 +58,61 @@ public class HomeFragment extends Fragment {
 
         PictureAdapterRecycler pictureAdapter=new PictureAdapterRecycler(buildArray(),R.layout.cardview_picture,getActivity());
         recyclerView.setAdapter(pictureAdapter);
+
+        floatingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takePicture();
+            }
+        });
+
         return view;
+    }
+
+    private void takePicture() {
+        Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (intent.resolveActivity(getActivity().getPackageManager())!=null){
+
+            File foto=null;
+
+            try {
+                foto=crearImageFile();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (foto!=null){
+                Uri fotoUri= FileProvider.getUriForFile(getActivity(),getActivity().getApplicationContext().getPackageName(),foto);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT,fotoUri);
+                startActivityForResult(intent,REQUEST_CAM);
+            }
+        }else {
+
+        }
+    }
+
+    private File crearImageFile() throws IOException {
+
+        String timeStamp=new SimpleDateFormat("yyMMdd_HH_mm_ss").format(new Date());
+        String imageFile="JPEG_"+timeStamp+"_";
+        File storageDir=getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+
+        File photo=File.createTempFile(imageFile,".jpg",storageDir);
+
+        photoPathTemp="file:"+photo.getAbsolutePath();
+
+        return photo;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode==REQUEST_CAM && resultCode==getActivity().RESULT_OK){
+            Log.d("HomeFragment","ok bro :D");
+            Intent intent=new Intent(getActivity(),NewPostActivity.class);
+            intent.putExtra("PHOTO_PAHT_TEMP",photoPathTemp);
+            startActivity(intent);
+        }else {
+
+        }
     }
 
     public ArrayList<CardviewPicturePOJO> buildArray(){
