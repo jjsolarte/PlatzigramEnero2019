@@ -19,7 +19,7 @@ public class NewPostActivity extends AppCompatActivity {
 
         imgFoto=findViewById(R.id.newpost_img);
         if (getIntent().getExtras()!=null){
-            String photoPath=getIntent().getExtras().getString("PHOTO_PATH_TEMP");
+            String photoPath=getIntent().getExtras().getString("PHOTO_PAHT_TEMP");
             Picasso.get().load(photoPath).into(imgFoto);
         }
     }

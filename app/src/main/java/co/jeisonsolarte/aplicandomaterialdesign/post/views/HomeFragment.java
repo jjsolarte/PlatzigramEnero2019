@@ -36,7 +36,7 @@ public class HomeFragment extends Fragment {
 
     private static final int REQUEST_CAM = 1;
     private FloatingActionButton floatingBtn;
-    private String photoPathTemp;
+    private String photoPathTemp="";
 
     public HomeFragment() {
         // Required empty public constructor
@@ -85,8 +85,6 @@ public class HomeFragment extends Fragment {
                 intent.putExtra(MediaStore.EXTRA_OUTPUT,fotoUri);
                 startActivityForResult(intent,REQUEST_CAM);
             }
-        }else {
-
         }
     }
 
