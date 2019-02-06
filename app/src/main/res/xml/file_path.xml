@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <path xmlns:android="http://schemas.android.com/apk/res/android">
-    <external-path name="Platzi" path="Android/data/co.jeisonsolarte.aplicandomaterialdesign/files/Picture" ></external-path>
+    <external-path name="Platzi" path="Android/data/co.jeisonsolarte.aplicandomaterialdesign/files/Pictures" ></external-path>
 </path>

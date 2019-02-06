@@ -2,9 +2,12 @@ package co.jeisonsolarte.aplicandomaterialdesign.post.views;
 
 
 import android.Manifest;
+import android.content.ClipData;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -29,6 +32,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import co.jeisonsolarte.aplicandomaterialdesign.R;
 import co.jeisonsolarte.aplicandomaterialdesign.adapter.PictureAdapterRecycler;
@@ -110,18 +114,25 @@ public class HomeFragment extends Fragment {
 
     private void takePicture() {
         Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION|Intent.FLAG_GRANT_READ_URI_PERMISSION);
         if (intent.resolveActivity(getActivity().getPackageManager())!=null){
 
             File foto=null;
-
+            Uri fotoUri=null;
             try {
                 foto=crearImageFile();
+                fotoUri= FileProvider.getUriForFile(getContext(),getActivity().getApplicationContext().getPackageName(),foto);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             if (foto!=null){
-                Uri fotoUri= FileProvider.getUriForFile(getActivity(),getActivity().getApplicationContext().getPackageName(),foto);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT,fotoUri);
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        intent.setClipData(ClipData.newRawUri("",fotoUri));
+                    }
+                    intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION|Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                }
                 startActivityForResult(intent,REQUEST_CAM);
             }
         }
@@ -147,8 +158,6 @@ public class HomeFragment extends Fragment {
             Intent intent=new Intent(getActivity(),NewPostActivity.class);
             intent.putExtra("PHOTO_PAHT_TEMP",photoPathTemp);
             startActivity(intent);
-        }else {
-
         }
     }
 
