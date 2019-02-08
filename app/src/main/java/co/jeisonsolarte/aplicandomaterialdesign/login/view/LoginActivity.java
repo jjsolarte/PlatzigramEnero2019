@@ -1,6 +1,5 @@
 package co.jeisonsolarte.aplicandomaterialdesign.login.view;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -13,10 +12,19 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.firebase.FirebaseApp;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
 import co.jeisonsolarte.aplicandomaterialdesign.R;
 import co.jeisonsolarte.aplicandomaterialdesign.login.presenter.LoginPresenter;
 import co.jeisonsolarte.aplicandomaterialdesign.login.presenter.LoginPresenterInterface;
@@ -33,12 +41,38 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface{
     private Button btnLogin;
     private ProgressBar progressBar;
 
+    private CallbackManager callbackManager;
+    private LoginButton loginButton;
+
     LoginPresenterInterface presenterInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        callbackManager=CallbackManager.Factory.create();
+        loginButton=findViewById(R.id.login_facebook_btn);
+
+        loginButton.setReadPermissions("email", "public_profile");
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.d("LoginActivity", "facebook:onSuccess:" + loginResult.getAccessToken().getApplicationId());
+                singInFacebookFirebase(loginResult.getAccessToken());
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d("LoginActivity", "facebook:onCancel");
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.d("LoginActivity", "facebook:onError", error);
+                error.printStackTrace();
+            }
+        });
 
         edtUser=findViewById(R.id.login_username);
         edtPassword=findViewById(R.id.login_pass);
@@ -77,8 +111,37 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface{
         });
     }
 
+    private void singInFacebookFirebase(AccessToken token) {
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        mAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    Log.d("LoginActivity", "signInWithCredential:success");
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    goHome();
+                    //updateUI(user);
+                }else {
+                    // If sign in fails, display a message to the user.
+                    Log.w("LoginActivity", "signInWithCredential:failure", task.getException());
+                    Toast.makeText(LoginActivity.this, "Authentication failed.",
+                            Toast.LENGTH_SHORT).show();
+                    //updateUI(null);
+                }
+            }
+        });
+    }
+
     public void singIn(EditText edtUser,EditText edtPassword){
         presenterInterface.singIn(edtUser.getText().toString(),edtPassword.getText().toString(),this,mAuth);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Pass the activity result back to the Facebook SDK
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

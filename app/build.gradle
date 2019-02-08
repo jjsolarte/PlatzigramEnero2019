@@ -17,6 +17,9 @@ android {
         }
     }
 }
+repositories {
+    jcenter()
+}
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     //noinspection GradleCompatible
@@ -34,7 +37,8 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.0.0'
     implementation 'com.zoonref:simple-view-behavior:1.0'
     implementation 'com.google.firebase:firebase-core:16.0.1'
-
+    implementation 'com.facebook.android:account-kit-sdk:4.+'
+    implementation 'com.facebook.android:facebook-login:[4,5)'
 }
 
 apply plugin: 'com.google.gms.google-services'

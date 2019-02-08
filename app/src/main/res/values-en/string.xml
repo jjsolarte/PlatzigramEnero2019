@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Material Design Aply</string>
     <string name="title_activity_reference">ReferenceActivity</string>
 
     <!--Login Activity-->
     <string name="login_hint_username">Name</string>
+
+    <string name="app_name">PlatziAndroid</string>
+    <string name="FACEBOOK_APP_ID">1321004818041867</string>
+    <string name="ACCOUNT_KIT_CLIENT_TOKEN">[ACCOUNT_KIT_CLIENT_TOKEN]</string>
+
 </resources>
