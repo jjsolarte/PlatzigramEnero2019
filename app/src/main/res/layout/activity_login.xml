@@ -82,6 +82,7 @@
                         android:textColor="@color/icons"
                         android:textSize="@dimen/login_dont_have_account"
                         android:layout_toRightOf="@id/login_dont_have_account"
+                        android:onClick="onRegister"
                         android:paddingLeft="20dp"/>
 
                     <ProgressBar

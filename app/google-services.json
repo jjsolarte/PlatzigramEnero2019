@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "851721682265",
+    "firebase_url": "https://platzigram-jjsr.firebaseio.com",
+    "project_id": "platzigram-jjsr",
+    "storage_bucket": "platzigram-jjsr.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:851721682265:android:ce69879614f18130",
+        "android_client_info": {
+          "package_name": "co.jeisonsolarte.aplicandomaterialdesign"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "851721682265-2oi8b0q4te1eaonstks3qqvsak2r17kt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.jeisonsolarte.aplicandomaterialdesign",
+            "certificate_hash": "230174bb9c5327b439d50c6a2a9279ddcb5fb359"
+          }
+        },
+        {
+          "client_id": "851721682265-r6tjgpjb2pd1gqvs2v30jf2in4gdqh6q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCY51A9SjxfNJVVuBHMLwETRuWKurXzVYQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "851721682265-r6tjgpjb2pd1gqvs2v30jf2in4gdqh6q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
