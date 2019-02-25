@@ -1,7 +1,6 @@
 package co.jeisonsolarte.aplicandomaterialdesign.adapter;
 
 import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -20,7 +19,7 @@ import java.util.ArrayList;
 
 import co.jeisonsolarte.aplicandomaterialdesign.R;
 import co.jeisonsolarte.aplicandomaterialdesign.model.CardviewPicturePOJO;
-import co.jeisonsolarte.aplicandomaterialdesign.views.PictureDetailActivity;
+import co.jeisonsolarte.aplicandomaterialdesign.post.views.PictureDetailActivity;
 
 public class PictureAdapterRecycler extends RecyclerView.Adapter<PictureAdapterRecycler.PictureViewHolder>{
 

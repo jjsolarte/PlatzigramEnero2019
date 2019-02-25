@@ -27,6 +27,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.firebase.crash.FirebaseCrash;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -70,6 +72,8 @@ public class HomeFragment extends Fragment {
 
         PictureAdapterRecycler pictureAdapter=new PictureAdapterRecycler(buildArray(),R.layout.cardview_picture,getActivity());
         recyclerView.setAdapter(pictureAdapter);
+
+
 
         floatingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,6 +128,7 @@ public class HomeFragment extends Fragment {
                 fotoUri= FileProvider.getUriForFile(getContext(),getActivity().getApplicationContext().getPackageName(),foto);
             } catch (Exception e) {
                 e.printStackTrace();
+                FirebaseCrash.report(e);
             }
             if (foto!=null){
                 intent.putExtra(MediaStore.EXTRA_OUTPUT,fotoUri);

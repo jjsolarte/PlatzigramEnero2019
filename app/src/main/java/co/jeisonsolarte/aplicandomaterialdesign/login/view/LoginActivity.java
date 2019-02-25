@@ -1,6 +1,8 @@
 package co.jeisonsolarte.aplicandomaterialdesign.login.view;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +20,9 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -44,6 +49,8 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface{
     private CallbackManager callbackManager;
     private LoginButton loginButton;
 
+    private SignInButton signInButton;
+
     LoginPresenterInterface presenterInterface;
 
     @Override
@@ -53,6 +60,9 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface{
 
         callbackManager=CallbackManager.Factory.create();
         loginButton=findViewById(R.id.login_facebook_btn);
+        signInButton=findViewById(R.id.login_google_singin);
+
+        inicialize();
 
         loginButton.setReadPermissions("email", "public_profile");
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -90,12 +100,12 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface{
                 FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
                 if (firebaseUser!=null){
                     Log.w("LoginActivity","User logeado "+firebaseUser.getEmail());
+                    goHome();
                 }else {
                     Log.w("LoginActivity","User no logeado ");
                 }
             }
         };
-
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,9 +116,16 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface{
                 } else {
                     singIn(edtUser,edtPassword);
                     //presenterInterface.singIn(edtUser.getText().toString(),edtPassword.getText().toString());
+
                 }
             }
         });
+    }
+
+    private void inicialize() {
+        //Inicializar Google Acount
+//        GoogleSignInOptions gso=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                .requestIdToken(getString(R.string.));
     }
 
     private void singInFacebookFirebase(AccessToken token) {
@@ -117,8 +134,12 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface{
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
+                    FirebaseUser user=task.getResult().getUser();
                     Log.d("LoginActivity", "signInWithCredential:success");
-                    FirebaseUser user = mAuth.getCurrentUser();
+                    SharedPreferences preferences=getSharedPreferences("USER", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor=preferences.edit();
+                    editor.putString("user",user.getEmail());
+                    editor.commit();
                     goHome();
                     //updateUI(user);
                 }else {
